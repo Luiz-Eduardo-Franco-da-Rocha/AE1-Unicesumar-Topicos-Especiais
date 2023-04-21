@@ -1,10 +1,63 @@
 package com.mycompany.luiz.eduardo.mapa;
 
+import java.util.Scanner;
 
-public class LuizEduardoMAPA {
+/**
+ *
+ * @author Luiz Eduardo Franco da Rocha
+ */
+public class Locacao {
+    private Locatario locatario;
+    private Quadra quadra;
+    private int tempo;
+    private char equipamento;
 
-    public static void main(String[] args) {
-        Locacao locacao = new Locacao(new Locatario("a","b","c","d"),new Quadra("a","b", 0),0,'a');
-        locacao.cadastrolocacao();
+    public Locacao(Locatario locatario, Quadra quadra, int tempoMinuto, char necessitaequipamento) {
+        this.locatario = locatario;
+        this.quadra = quadra;
+        this.tempo = tempoMinuto;
+        this.equipamento = necessitaequipamento;
     }
+
+    public double calculalocacao() {
+        double valorLocacao = this.tempo * this.quadra.Valorminuto();
+        if (this.tempo >= 120) {
+            valorLocacao *= 0.9;
+        }
+        if (this.equipamento == 'S' || this.equipamento == 's') {
+            valorLocacao += 50;
+        }
+        return valorLocacao;
+    
+    }
+    public void resumolocacao(){  
+        System.out.println("Locatário \nNome: " + locatario.Nome());
+        System.out.println("CPF: " + locatario.Cpf());
+        System.out.println("Telefone: " + locatario.Telefone());
+        System.out.println("Ano de Nascimento: " + locatario.Anonasc());
+        System.out.println("Quadra \nNome da Quadra: " + quadra.Nome());
+        System.out.println("Tipo: " + quadra.Tipodaquadra());
+        System.out.println("Valor do Minuto: " + quadra.Valorminuto());
+        System.out.println("Locação \nTempo em Minutos: " + this.tempo);
+        System.out.println("Necessita Equipamento: " + this.equipamento);
+        System.out.println("Valor Calculado: " + calculalocacao());
+    
+    }
+    public void cadastrolocacao(){
+        locatario.cadastrarlocatario();
+        quadra.cadastrarquadra();
+        locatario.verificarmaioridade();
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Digite quanto tempo a Quadra será usada: ");
+        this.tempo = Integer.parseInt(scan.nextLine());
+        System.out.print("Precisa de equipamento?: ");
+        this.equipamento = scan.next().charAt(0);
+        while (!(this.equipamento == 'S' || this.equipamento == 's' || this.equipamento == 'N' || this.equipamento == 'n')) {
+            System.out.println("Opção inválida! Digite Sim ou Não!!");
+            this.equipamento = scan.next().charAt(0);
+        }
+        resumolocacao();
+    }
+    
+    
 }
