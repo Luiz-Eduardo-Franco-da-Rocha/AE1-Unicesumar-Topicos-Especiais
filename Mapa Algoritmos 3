@@ -1,0 +1,10 @@
+package com.mycompany.luiz.eduardo.mapa;
+
+
+public class LuizEduardoMAPA {
+
+    public static void main(String[] args) {
+        Locacao locacao = new Locacao(new Locatario("a","b","c","d"),new Quadra("a","b", 0),0,'a');
+        locacao.cadastrolocacao();
+    }
+}
